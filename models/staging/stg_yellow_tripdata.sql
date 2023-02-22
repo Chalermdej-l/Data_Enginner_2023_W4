@@ -1,10 +1,17 @@
 {{ config(materialized='view') }}
- 
-with tripdata as 
+
+with combinetrip as(
+    select * from {{ source('staging','yellow_tripdata_1') }} union all
+    select * from {{ source('staging','yellow_tripdata_2') }} union all
+    select * from {{ source('staging','yellow_tripdata_3') }} union all
+    select * from {{ source('staging','yellow_tripdata_4') }}
+)
+ ,
+tripdata as 
 (
   select *,
-    row_number() over(partition by vendorid, tpep_pickup_datetime) as rn
-  from {{ source('staging','yellow_tripdata') }}
+    row_number() over(partition by cast(vendorid as int), tpep_pickup_datetime) as rn
+  from combinetrip
   where vendorid is not null 
 )
 select
