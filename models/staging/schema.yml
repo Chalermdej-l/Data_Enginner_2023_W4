@@ -12,8 +12,12 @@ sources:
       # loaded_at_field: record_loaded_at
       tables:
         - name: green_tripdata
-        - name: yellow_tripdata
-         # freshness:
+        - name: yellow_tripdata_1
+        - name: yellow_tripdata_2
+        - name: yellow_tripdata_3
+        - name: yellow_tripdata_4
+        - name: fhv_tripdata_2019
+        # freshness:
            # error_after: {count: 6, period: hour}
 
 models:
